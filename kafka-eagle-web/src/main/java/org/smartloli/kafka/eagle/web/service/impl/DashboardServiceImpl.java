@@ -24,6 +24,8 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.smartloli.kafka.eagle.common.domain.DashboardDomain;
 import org.smartloli.kafka.eagle.common.util.Constants;
@@ -47,6 +49,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 	/** Kafka service interface. */
 	private KafkaService kafkaService = new KafkaFactory().create();
+    private static final Logger LOG = LoggerFactory.getLogger(DashboardServiceImpl.class);
 
 	/** Get consumer number from zookeeper. */
 	private int getConsumerNumbers(String clusterAlias) {
@@ -103,6 +106,20 @@ public class DashboardServiceImpl implements DashboardService {
 		dashboard.setBrokers(brokerSize);
 		dashboard.setTopics(topicSize);
 		dashboard.setZks(zks);
+        int activecount=0;
+        JSONArray consumerGroups = JSON.parseArray(kafkaService.getKafkaConsumer(clusterAlias));
+        for (Object object : consumerGroups) {
+                JSONObject consumerGroup = (JSONObject) object;
+                String group = consumerGroup.getString("group");
+                int num=JSON.parseObject(kafkaService.getKafkaActiverSize(clusterAlias, group)).getInteger("activers");
+                if (num>0)
+                    activecount+=1;
+                LOG.info("activecount1 "+num);
+                LOG.info("activecount2 "+activecount);
+        
+        }
+        dashboard.setActiveCount(activecount);
+        LOG.info("acot "+dashboard.getActiveCount());
 		String formatter = SystemConfigUtils.getProperty("kafka.eagle.offset.storage");
 		if ("kafka".equals(formatter)) {
 			dashboard.setConsumers(kafkaService.getKafkaConsumerGroups(clusterAlias));

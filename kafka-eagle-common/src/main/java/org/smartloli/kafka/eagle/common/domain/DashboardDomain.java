@@ -32,6 +32,7 @@ public class DashboardDomain {
 	private int topics = 0;
 	private int zks = 0;
 	private int consumers = 0;
+	private int activecount = 0;
 
 	public int getBrokers() {
 		return brokers;
@@ -65,6 +66,13 @@ public class DashboardDomain {
 		this.consumers = consumers;
 	}
 
+	public int getActiveCount() {
+		return activecount;
+	}
+
+	public void setActiveCount(int activecount) {
+		this.activecount = activecount;
+	}
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);

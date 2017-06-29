@@ -19,6 +19,7 @@ $(document).ready(function() {
 		$("#topics_count").text(dashboard.topics);
 		$("#zks_count").text(dashboard.zks);
 		$("#consumers_count").text(dashboard.consumers);
+		$("#active_count").text(dashboard.activecount);
 		
 		function toggleAll(d) {
 			if (d.children) {

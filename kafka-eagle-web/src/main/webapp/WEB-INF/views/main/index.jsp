@@ -139,7 +139,11 @@ path.link {
 									<i class="fa fa-users fa-5x"></i>
 								</div>
 								<div class="col-xs-9 text-right">
-									<div id="consumers_count" class="huge">0</div>
+                                    <div class="huge">
+                                    <span id="consumers_count"></span>
+                                    <span style="color:#0F0">/</span>
+                                    <span style="color:#F00" id="active_count"></span>
+                                    </div>
 									<div>ConsumerGroups</div>
 								</div>
 							</div>
