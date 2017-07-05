@@ -256,7 +256,7 @@ public class TopicController {
 					obj.put("partitionNumbers", topic.getInteger("partitionNumbers"));
 					obj.put("created", topic.getString("created"));
 					obj.put("modify", topic.getString("modify"));
-					obj.put("operate", "<a name='remove' href='#" + topic.getString("topic") + "' class='btn btn-danger btn-xs'>Remove</a>&nbsp");
+					obj.put("operate", "<a name='remove' href='#" + topic.getString("topic") + "' class='btn btn-danger btn-xs' disabled>Remove</a>&nbsp");
 					aaDatas.add(obj);
 				}
 				offset++;
@@ -302,7 +302,8 @@ public class TopicController {
 	public ModelAndView topicDelete(@PathVariable("topicName") String topicName, @PathVariable("token") String token, HttpSession session, HttpServletResponse response,
 			HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		if (SystemConfigUtils.getProperty("kafka.eagle.topic.token").equals(token)) {
+		mav.setViewName("redirect:/topic/list");
+		/*if (SystemConfigUtils.getProperty("kafka.eagle.topic.token").equals(token)) {
 			String clusterAlias = session.getAttribute(Constants.SessionAlias.CLUSTER_ALIAS).toString();
 			Map<String, Object> respons = kafkaService.delete(clusterAlias, topicName);
 			if ("success".equals(respons.get("status"))) {
@@ -312,7 +313,7 @@ public class TopicController {
 			}
 		} else {
 			mav.setViewName("redirect:/errors/500");
-		}
+		}*/
 		return mav;
 	}
 

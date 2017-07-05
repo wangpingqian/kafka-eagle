@@ -16,11 +16,13 @@
  * limitations under the License.
  */
 package org.smartloli.kafka.eagle.common.domain;
-
+import org.smartloli.kafka.eagle.common.util.SystemConfigUtils;
 import java.io.File;
 import java.util.List;
 import java.util.Properties;
-
+import java.security.Security;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Definition email sender information.
  * 
@@ -40,7 +42,8 @@ public class MailSenderDomain {
 	private String content;
 	private String[] attachFileNames;
 	private List<File> fileList;
-
+    private final Logger LOG = LoggerFactory.getLogger(MailSenderDomain.class);
+    final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 	public List<File> getFileList() {
 		return fileList;
 	}
@@ -50,10 +53,18 @@ public class MailSenderDomain {
 	}
 
 	public Properties getProperties() {
-		Properties p = new Properties();
-		p.put("mail.smtp.host", this.mailServerHost);
+     	Properties p = new Properties();
+	   	p.put("mail.smtp.host", this.mailServerHost);
 		p.put("mail.smtp.port", this.mailServerPort);
 		p.put("mail.smtp.auth", validate ? "true" : "false");
+        boolean ssl=SystemConfigUtils.getBooleanProperty("kafka.eagel.mail.ssl.enable");
+        if(ssl){
+         p.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+         p.setProperty("mail.smtp.socketFactory.fallback", "false");
+         p.setProperty("mail.smtp.socketFactory.port", "465");
+         p.setProperty("mail.smtp.ssl.enable", "ture");
+         LOG.info("ssl connect sucess!");
+        }
 		return p;
 	}
 
