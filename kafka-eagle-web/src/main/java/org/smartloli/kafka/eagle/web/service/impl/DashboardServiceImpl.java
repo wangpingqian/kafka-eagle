@@ -114,12 +114,9 @@ public class DashboardServiceImpl implements DashboardService {
                 int num=JSON.parseObject(kafkaService.getKafkaActiverSize(clusterAlias, group)).getInteger("activers");
                 if (num>0)
                     activecount+=1;
-                LOG.info("activecount1 "+num);
-                LOG.info("activecount2 "+activecount);
         
         }
         dashboard.setActiveCount(activecount);
-        LOG.info("acot "+dashboard.getActiveCount());
 		String formatter = SystemConfigUtils.getProperty("kafka.eagle.offset.storage");
 		if ("kafka".equals(formatter)) {
 			dashboard.setConsumers(kafkaService.getKafkaConsumerGroups(clusterAlias));

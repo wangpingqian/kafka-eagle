@@ -21,7 +21,7 @@ $(document).ready(function() {
 		$.ajax({
 			type : 'get',
 			dataType : 'json',
-			url : '/ke/consumer/offset/' + group + '/' + topic + '/realtime/ajax',
+			url : '/ke/consumer/offset/' + group.replace(/\//g,'==') + '/' + topic + '/realtime/ajax',
 			success : function(datas) {
 				if (datas != null) {
 					// Consumer & Producer Rate

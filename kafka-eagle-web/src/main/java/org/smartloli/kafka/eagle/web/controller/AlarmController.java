@@ -225,7 +225,7 @@ public class AlarmController {
 		HttpSession session = request.getSession();
 		String clusterAlias = session.getAttribute(Constants.SessionAlias.CLUSTER_ALIAS).toString();
 
-		alarmService.delete(clusterAlias, group, topic);
+		alarmService.delete(clusterAlias, group.replaceAll("==","/"), topic);
 		return new ModelAndView("redirect:/alarm/modify");
 	}
 }

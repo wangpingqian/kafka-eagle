@@ -177,6 +177,7 @@ $(document).ready(function() {
 	var offset = 0;
 	$(document).on('click', 'a[class=link]', function() {
 		var group = $(this).html();
+        console.log(group);
 		$('#doc_info').modal('show')
 //		$('#doc_info').modal({
 //			backdrop : 'static',
@@ -202,7 +203,7 @@ $(document).ready(function() {
 			"bProcessing" : true,
 			"bServerSide" : true,
 			"fnServerData" : retrieveData,
-			"sAjaxSource" : "/ke/consumer/" + group + "/table/ajax",
+            "sAjaxSource" : "/ke/consumer/" + group.replace(/\//g,'==') + "/table/ajax",
 			"aoColumns" : [ {
 				"mData" : 'id'
 			}, {

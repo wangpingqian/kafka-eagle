@@ -45,7 +45,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Sets the user roles and distributes the access resource directories to each
  * role.
@@ -65,6 +66,7 @@ public class RoleController {
 	@Autowired
 	private SSORealm ssoRealm;
 
+    private final static Logger LOG = LoggerFactory.getLogger(RoleController.class);
 	/** Role viewer. */
 	@RequiresPermissions("/system/role")
 	@RequestMapping(value = "/role", method = RequestMethod.GET)
@@ -99,7 +101,6 @@ public class RoleController {
 		String username = request.getParameter("ke_user_name");
 		String realname = request.getParameter("ke_real_name");
 		String email = request.getParameter("ke_user_email");
-
 		Signiner signin = new Signiner();
 		signin.setEmail(email);
 		signin.setPassword(UUID.randomUUID().toString().substring(0, 8));

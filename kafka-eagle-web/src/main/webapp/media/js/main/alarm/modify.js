@@ -43,7 +43,7 @@ $(document).ready(function() {
 		var group = href.split("#")[1].split("/")[0];
 		var topic = href.split("#")[1].split("/")[1];
 		$("#remove_div").html("");
-		$("#remove_div").append("<a href='/ke/alarm/" + group + "/" + topic + "/del' class='btn btn-danger'>Remove</a>");
+		$("#remove_div").append("<a href='/ke/alarm/" + group.replace(/\//g,'==') + "/" + topic + "/del' class='btn btn-danger'>Remove</a>");
 		$('#doc_info').modal({
 			backdrop : 'static',
 			keyboard : false

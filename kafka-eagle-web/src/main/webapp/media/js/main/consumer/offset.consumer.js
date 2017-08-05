@@ -3,12 +3,12 @@ $(document).ready(function() {
 	var tmp = url.split("offset/")[1];
 	var group = tmp.split("/")[0];
 	var topic = tmp.split("/")[1];
-	$("#topic_name_header").find("strong").html("<a href='/ke/consumers/offset/" + group + "/" + topic + "/realtime'>" + topic + "</a>");
+	$("#topic_name_header").find("strong").html("<a href='/ke/consumers/offset/" + group.replace(/\//g,'==') + "/" + topic + "/realtime'>" + topic + "</a>");
 
 	var offset = 0;
 
 	function offsetDetail() {
-		$("#offset_topic_info").append("<div id='div_children" + offset + "'><table id='result_children" + offset + "' class='table table-bordered table-hover' width='100%'><thead><tr><th>Partition</th><th>LogSize</th><th>Offset</th><th>Lag</th><th>Owner</th><th>Created</th><th>Modify</th></tr></thead></table></div>");
+		$("#offset_topic_info").append("<div id='div_children" + offset + "'><table id='result_children" + offset + "' class='table table-bordered table-hover' width='100%'><thead><tr><th>Partition</th><th>EarliestOffset</th><th>LogSize</th><th>Offset</th><th>Lag</th><th>Owner</th><th>Created</th><th>Modify</th></tr></thead></table></div>");
 		if (offset > 0) {
 			$("#div_children" + (offset - 1)).remove();
 		}
@@ -19,10 +19,13 @@ $(document).ready(function() {
 			"bProcessing" : true,
 			"bServerSide" : true,
 			"fnServerData" : retrieveData,
-			"sAjaxSource" : "/ke/consumer/offset/" + group + "/" + topic + "/ajax",
+			"sAjaxSource" : "/ke/consumer/offset/" + group.replace(/\//g,'==') + "/" + topic + "/ajax",
 			"aoColumns" : [ {
 				"mData" : 'partition'
 			}, {
+               "mData": 'earlistoffset'
+            },
+            {
 				"mData" : 'logsize'
 			}, {
 				"mData" : 'offset'
